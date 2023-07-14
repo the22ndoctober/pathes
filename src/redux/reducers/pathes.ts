@@ -1,19 +1,6 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
+import {createSlice} from '@reduxjs/toolkit'
 import * as actions from '../actions/pathes'
-import {firestore} from '../../firebase/config'
 import { GET_PATHES } from '../types/types'
-
-const getPathes = async () => {
-    const req = await firestore
-        .collection('Pathes')
-        .orderBy('favorites', 'desc')
-        .get()
-    const data:any[] = req.docs.map(e=> e.data())
-    return data
-}
-
-export const fetchPathes = createAsyncThunk(GET_PATHES, getPathes)
-
 
 type Pathes = {
     pathes: any[],
@@ -37,17 +24,17 @@ export const pathesSlice = createSlice({
     },
     extraReducers(builder){
         builder
-            .addCase(fetchPathes.pending, (state, action) => {
+            .addCase(actions.fetchPathes.pending, (state, action) => {
                 state.status = 'loading'
             })
-            .addCase(fetchPathes.fulfilled, (state, action) => {
+            .addCase(actions.fetchPathes.fulfilled, (state, action) => {
                 state.status = 'succeeded'
                 action.payload.forEach((e:any)=>{
                     state.pathes.push(e)
                 })
                 
             })
-            .addCase(fetchPathes.rejected, (state, action) => {
+            .addCase(actions.fetchPathes.rejected, (state, action) => {
                 state.status = 'failed'
                 state.error = action.error.message
             })

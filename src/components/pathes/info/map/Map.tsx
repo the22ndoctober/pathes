@@ -55,15 +55,16 @@ const Map = () => {
               Reset
             </Button>
             <GoogleMap 
-            
-            zoom={16} 
-            center={center}
-            mapContainerStyle={{width: '100%', height: '100%',cursor: 'pointer'}}
-            onClick={(e)=>{
-                e.domEvent.preventDefault()
-                setMarkers((state):any=>[...state, e.latLng])
-                setCenter(e.latLng)
-            }}
+                
+                zoom={16} 
+                center={center}
+                
+                mapContainerStyle={{width: '100%', height: '100%',cursor: 'pointer'}}
+                onClick={(e)=>{
+                    e.domEvent.preventDefault()
+                    setMarkers((state):any=>[...state, e.latLng])
+                    setCenter(e.latLng)
+                }}
             >   
                 {
                     directions.length > 0 && directions.map((direction,id)=>{

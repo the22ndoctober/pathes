@@ -3,7 +3,8 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import PathItem from '../pathItem/PathItem'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchPathes, selectPathes, getPathesStatus, getPathesError} from '../../../../redux/reducers/pathes'
+import { selectPathes, getPathesStatus, getPathesError} from '../../../../redux/reducers/pathes'
+import { fetchPathes } from '../../../../redux/actions/pathes'
 import CircularProgress from '@mui/joy/CircularProgress'
 
 
