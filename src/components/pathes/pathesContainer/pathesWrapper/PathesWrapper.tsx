@@ -8,6 +8,8 @@ const PathesWrapper = () => {
     <Box>
         <Grid container spacing={0} direction={'column'}>
           <PathItem/>
+          <PathItem/>
+          <PathItem/>
         </Grid>
     </Box>
   )
