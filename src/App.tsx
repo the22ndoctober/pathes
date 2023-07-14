@@ -9,7 +9,7 @@ function App() {
       
       <Container maxWidth="lg" style={{color: 'grey'}}>
         <Header/>
-        <hr />
+          <hr />
         <Pathes/>
       </Container>
     </>

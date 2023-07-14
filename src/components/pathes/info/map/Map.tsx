@@ -7,7 +7,7 @@ import Button from '@mui/material/Button'
 
 const Map = () => {
     const {isLoaded} = useLoadScript({
-        googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ''
+        googleMapsApiKey: 'AIzaSyBA3l3bQ6X3HC7DtMZyLVjIC8I7acphPr8'
     })
 
     
@@ -39,6 +39,7 @@ const Map = () => {
 
     useEffect(()=>{
         handleDirection()  
+        console.log(directions)
     }, [markers])
 
 
@@ -47,6 +48,7 @@ const Map = () => {
     return (
         <Box sx={{width: '100%', height: '300px'}} >
             <Button variant="text" color="primary" onClick={()=>{
+                
                 setDirections([])
                 setMarkers([])
             }}>
@@ -58,6 +60,7 @@ const Map = () => {
             center={center}
             mapContainerStyle={{width: '100%', height: '100%',cursor: 'pointer'}}
             onClick={(e)=>{
+                e.domEvent.preventDefault()
                 setMarkers((state):any=>[...state, e.latLng])
                 setCenter(e.latLng)
             }}
