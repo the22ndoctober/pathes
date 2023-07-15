@@ -6,7 +6,7 @@ import PathItem from '../pathItem/PathItem'
 const PathesWrapper = () => {
   return (
     <Box>
-        <Grid container spacing={0} direction={'column'}>
+        <Grid container spacing={0} rowGap={1} direction={'column'} sx={{overflowY: 'scroll'}}>
           <PathItem/>
           <PathItem/>
           <PathItem/>

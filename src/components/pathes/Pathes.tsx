@@ -9,7 +9,7 @@ const Pathes = () => {
     
     <Container maxWidth="lg">
         <Grid container spacing={0} direction={'row'}>
-            <Grid item xs={6} >
+            <Grid item xs={6}>
                 <PathesContainer/>
             </Grid>
             <Grid item xs={6}>
