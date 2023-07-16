@@ -3,9 +3,11 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import PathItem from '../pathItem/PathItem'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectPathes, getPathesStatus, getPathesError} from '../../../../redux/reducers/pathes'
+import { selectPathes, getPathesStatus, getPathesError, selectPath} from '../../../../redux/reducers/pathes'
 import { fetchPathes } from '../../../../redux/actions/pathes'
+import { SELECT_PATH } from '../../../../redux/types/types'
 import CircularProgress from '@mui/joy/CircularProgress'
+
 
 
 const PathesWrapper = () => {   
@@ -31,6 +33,12 @@ const PathesWrapper = () => {
                   return (
                     <PathItem
                     key={path.id}
+                    id={path.id}
+                    select={
+                      ()=>{
+                        dispatch(selectPath({type: SELECT_PATH, payload: path.id}))
+                      }
+                    }
                     title={path.title}
                     shortDescprition={path.shortDescprition}
                     longDiscription={path.longDiscription}

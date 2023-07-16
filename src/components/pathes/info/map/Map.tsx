@@ -2,8 +2,7 @@ import {useState, useEffect, useMemo} from 'react'
 import { GoogleMap, useLoadScript, Marker, DirectionsRenderer } from '@react-google-maps/api'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import { useDispatch, useSelector } from 'react-redux'
-import { activePath, selectPath } from '../../../../redux/reducers/pathes'
+
 
 
 
@@ -12,8 +11,7 @@ const Map = () => {
         googleMapsApiKey: 'AIzaSyBA3l3bQ6X3HC7DtMZyLVjIC8I7acphPr8'
     })
 
-    const selectedPath = useSelector(activePath)
-    const dispatch = useDispatch()
+    
 
     
     const [center,setCenter] = useState<any>({lat: 43.65,lng: -79.34})
@@ -49,7 +47,7 @@ const Map = () => {
 
     if(!isLoaded) return <p>no map</p>
     
-    if(selectedPath !== 'none') return (
+    return (
         
         <Box sx={{width: '100%', height: '300px'}} >
             <Button variant="text" color="primary" onClick={()=>{
@@ -84,9 +82,6 @@ const Map = () => {
             </GoogleMap>
         </Box>
           
-    )
-    return(
-        <Box>No pathes choosen</Box>
     )
 }
 

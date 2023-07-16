@@ -24,7 +24,7 @@ export const pathesSlice = createSlice({
             state.pathes = actions.addPath(state.pathes, action.type, action.payload)
         },
         selectPath: (state, action) =>{
-            state.activePath = actions.selectPath(state.activePath, action.type, action.payload)
+            state.activePath = actions.selectPath(state.activePath, action.payload)
         }
     },
     extraReducers(builder){
