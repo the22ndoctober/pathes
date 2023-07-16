@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid'
 import PathItem from '../pathItem/PathItem'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectPathes, getPathesStatus, getPathesError, selectPath} from '../../../../redux/reducers/pathes'
+
 import { fetchPathes } from '../../../../redux/actions/pathes'
 import { SELECT_PATH } from '../../../../redux/types/types'
 import CircularProgress from '@mui/joy/CircularProgress'
@@ -41,7 +42,7 @@ const PathesWrapper = () => {
                     }
                     title={path.title}
                     shortDescription={path.shortDescription}
-                    longDiscription={path.longDiscription}
+                    longDescription={path.longDescription}
                     pathLength={path.pathLength}
                     favorites={path.favorites}
                   />

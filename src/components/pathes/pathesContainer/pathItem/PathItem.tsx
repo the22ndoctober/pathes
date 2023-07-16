@@ -1,19 +1,20 @@
 import Box from "@mui/material/Box"
 import Grid from '@mui/material/Grid'
-import OpenWithOutlinedIcon from '@mui/icons-material/OpenWithOutlined';
+import OpenWithOutlinedIcon from '@mui/icons-material/OpenWithOutlined'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import ArrowForwardIosTwoToneIcon from '@mui/icons-material/ArrowForwardIosTwoTone'
 import StarIcon from '@mui/icons-material/Star'
-import { activePath } from "../../../../redux/reducers/pathes"; 
-import { UseSelector, useSelector } from "react-redux/es/hooks/useSelector";
+import { activePath } from "../../../../redux/reducers/pathes"
+import {useSelector } from "react-redux/es/hooks/useSelector"
+import { getSearchValue } from "../../../../redux/reducers/search"
 import styled from "@emotion/styled";
 
 type PathItemProps = {
   id: number,
   title: string,
   shortDescription: string,
-  longDiscription: string,
+  longDescription: string,
   pathLength: number,
   select: any,
   favorites: boolean
@@ -21,9 +22,10 @@ type PathItemProps = {
 
 
 
-const PathItem = ({id, title,shortDescription,longDiscription,select,pathLength,favorites}:PathItemProps) => {
+const PathItem = ({id, title,shortDescription,longDescription,select,pathLength,favorites}:PathItemProps) => {
 
   const selectedPath = useSelector(activePath)
+  const searchValue = useSelector(getSearchValue)
 
   const PathItemBox = styled(Box)({
     padding: '1rem',
@@ -31,7 +33,14 @@ const PathItem = ({id, title,shortDescription,longDiscription,select,pathLength,
   })
 
   return (
-    <PathItemBox onClick={select}>
+    <PathItemBox 
+      onClick={select} 
+      display={title.toLowerCase().includes(searchValue) 
+        || shortDescription.toLowerCase().includes(searchValue) 
+        || longDescription.toLowerCase().includes(searchValue)
+         ? 'flex' 
+         : 'none'}
+      >
       <Grid container justifyContent={'space-between'} spacing={0} columnGap={2} direction={'row'} alignItems={'center'}>
           <Grid item >
             <Grid container columnGap={2} direction={'row'} alignItems={'center'}>

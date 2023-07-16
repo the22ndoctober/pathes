@@ -25,6 +25,9 @@ export const pathesSlice = createSlice({
         },
         selectPath: (state, action) =>{
             state.activePath = actions.selectPath(state.activePath, action.payload)
+        },
+        handleFavorites: (state,action)=>{
+            state.pathes = actions.handleFavorites(state.pathes,action.payload)
         }
     },
     extraReducers(builder){
@@ -47,7 +50,7 @@ export const pathesSlice = createSlice({
     }
 })
 
-export const {addpath, selectPath} = pathesSlice.actions
+export const {addpath, selectPath,handleFavorites} = pathesSlice.actions
 
 export const selectPathes = (state:any) => state.pathes.pathes
 export const activePath = (state:any) => state.pathes.activePath

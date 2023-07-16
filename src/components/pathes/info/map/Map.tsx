@@ -44,14 +44,14 @@ const Map = () => {
     }
 
     useEffect(()=>{
-        setMarkers(pathes.find((path:any)=> path.id === selectedPath).markers)
+        setMarkers(pathes.find((path:any) => path.id === selectedPath).markers)
         console.log(markers)
         handleDirection()  
         return ()=>{
             setDirections([])
             setMarkers([])
         }
-    }, [selectedPath])
+    }, [])
 
     useEffect(()=>{
         setCenter(markers[0])
@@ -62,14 +62,7 @@ const Map = () => {
     
     return (
         
-        <Box sx={{width: '400px', height: '100px'}} >
-            <Button variant="text" color="primary" onClick={()=>{
-                
-                setDirections([])
-                setMarkers([])
-            }}>
-              Reset
-            </Button>
+        <Box sx={{width: '100%', height: '250px'}} >
             <GoogleMap 
                 
                 zoom={20} 
