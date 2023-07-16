@@ -24,12 +24,27 @@ const PathesWrapper = () => {
 
     return (
         <Box>
-            <Grid container spacing={0} direction={'column'}>
-                {status === 'loading' ? <CircularProgress color="primary"/> : <PathItem/>}
+            <Grid container spacing={0} direction={'column'} rowGap={2}>
+                {status === 'loading' ? 
+                <CircularProgress color="primary"/> : 
+                pathes.map((path:any)=>{
+                  return (
+                    <PathItem
+                    key={path.id}
+                    title={path.title}
+                    shortDescprition={path.shortDescprition}
+                    longDiscription={path.longDiscription}
+                    pathLength={path.pathLength}
+                    favorites={path.favorites}
+                  />
+                  )
+                })
+                
+                }
+                
                 
             </Grid>
         </Box>
    )
 }
-
 export default PathesWrapper

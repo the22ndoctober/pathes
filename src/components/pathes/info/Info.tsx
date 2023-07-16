@@ -7,8 +7,8 @@ import Button from '@mui/material/Button'
 
 const Info = () => {
   return (
-    <Container maxWidth="lg">
-      <Grid container spacing={0} direction={'column'}>
+    
+      <Grid container spacing={0} direction={'column'} paddingLeft={4}>
         <PathInfo/>
         <Map/>
         <Button variant="text" color="primary">
@@ -18,7 +18,7 @@ const Info = () => {
           Remove
         </Button>
       </Grid>
-    </Container>
+    
   )
 }
 

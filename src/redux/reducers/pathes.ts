@@ -4,14 +4,16 @@ import { GET_PATHES } from '../types/types'
 
 type Pathes = {
     pathes: any[],
-    status: 'idle' | 'loading' | 'succeeded' | 'failed'
-    error: any
+    status: 'idle' | 'loading' | 'succeeded' | 'failed',
+    error: any,
+    activePath: number | 'none'
 }
 
 const initialState: Pathes = {
     pathes: [],
     status: 'idle',
-    error: null
+    error: null,
+    activePath: 'none'
 }
 
 export const pathesSlice = createSlice({
@@ -20,6 +22,9 @@ export const pathesSlice = createSlice({
     reducers: {
         addpath: (state,action)=>{
             state.pathes = actions.addPath(state.pathes, action.type, action.payload)
+        },
+        selectPath: (state, action) =>{
+            state.activePath = actions.selectPath(state.activePath, action.type, action.payload)
         }
     },
     extraReducers(builder){
@@ -42,9 +47,10 @@ export const pathesSlice = createSlice({
     }
 })
 
-export const {addpath} = pathesSlice.actions
+export const {addpath, selectPath} = pathesSlice.actions
 
 export const selectPathes = (state:any) => state.pathes.pathes
+export const activePath = (state:any) => state.pathes.activePath
 export const getPathesStatus = (state:any) => state.pathes.status
 export const getPathesError = (state:any) => state.pathes.error
 

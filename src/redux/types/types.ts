@@ -1,2 +1,3 @@
 export const ADD_PATH = 'APP/ADD_PATH'
+export const SELECT_PATH = 'APP/SELECT_PATH'
 export const GET_PATHES = 'FIREBASE/GET_PATHES'
