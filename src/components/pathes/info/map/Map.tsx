@@ -1,5 +1,7 @@
 import {useState, useEffect, useMemo} from 'react'
 import { GoogleMap, useLoadScript, Marker, DirectionsRenderer } from '@react-google-maps/api'
+import {useSelector, useDispatch} from 'react-redux'
+import { selectPathes, activePath } from '../../../../redux/reducers/pathes'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 
@@ -11,11 +13,12 @@ const Map = () => {
         googleMapsApiKey: 'AIzaSyBA3l3bQ6X3HC7DtMZyLVjIC8I7acphPr8'
     })
 
-    
+    const dispatch = useDispatch()
+    const pathes = useSelector(selectPathes)
+    const selectedPath = useSelector(activePath)
 
-    
-    const [center,setCenter] = useState<any>({lat: 43.65,lng: -79.34})
-    const [markers,setMarkers] = useState([])
+    const [center,setCenter] = useState<any>()
+    const [markers,setMarkers] = useState<any[]>([])
     const [directions, setDirections] = useState<any[]>([])
 
     const handleDirection = ()=>{
@@ -41,15 +44,25 @@ const Map = () => {
     }
 
     useEffect(()=>{
+        setMarkers(pathes.find((path:any)=> path.id === selectedPath).markers)
+        console.log(markers)
         handleDirection()  
-    }, [markers])
+        return ()=>{
+            setDirections([])
+            setMarkers([])
+        }
+    }, [selectedPath])
+
+    useEffect(()=>{
+        setCenter(markers[0])
+    },[markers])
 
 
     if(!isLoaded) return <p>no map</p>
     
     return (
         
-        <Box sx={{width: '100%', height: '300px'}} >
+        <Box sx={{width: '400px', height: '100px'}} >
             <Button variant="text" color="primary" onClick={()=>{
                 
                 setDirections([])
@@ -59,15 +72,10 @@ const Map = () => {
             </Button>
             <GoogleMap 
                 
-                zoom={16} 
+                zoom={20} 
                 center={center}
                 
                 mapContainerStyle={{width: '100%', height: '100%',cursor: 'pointer'}}
-                onClick={(e)=>{
-                    e.domEvent.preventDefault()
-                    setMarkers((state):any=>[...state, e.latLng])
-                    setCenter(e.latLng)
-                }}
             >   
                 {
                     directions.length > 0 && directions.map((direction,id)=>{

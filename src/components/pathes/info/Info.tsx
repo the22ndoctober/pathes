@@ -9,24 +9,28 @@ import { activePath, selectPath } from '../../../redux/reducers/pathes'
 import OpenWithOutlinedIcon from '@mui/icons-material/OpenWithOutlined'
 import Typography from '@mui/material/Typography'
 
+
 const Info = () => {
 
   const selectedPath = useSelector(activePath)
   const dispatch = useDispatch()
 
   if(selectedPath !== 'none') return (
-
-      <Grid container spacing={0} direction={'column'} paddingLeft={4}>
-        <Button variant="text" color="primary">
-          Add to Favourites
-        </Button>
+    
+      <Grid container spacing={0} direction={'column'} paddingLeft={4} sx={{minHeight: '100%'}} justifyContent={'space-between'}>
+        
         <PathInfo/>
         <Map/>
-        
-        <Button variant="text" color="primary">
-          Remove
-        </Button>
+        <Grid item>
+          <Button variant="text" color="primary">
+            Add to Favourites
+          </Button>
+          <Button variant="text" color="primary">
+            Remove
+          </Button>
+        </Grid>
       </Grid>
+   
     
   )
 

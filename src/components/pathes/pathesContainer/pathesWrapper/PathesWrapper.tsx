@@ -40,7 +40,7 @@ const PathesWrapper = () => {
                       }
                     }
                     title={path.title}
-                    shortDescprition={path.shortDescprition}
+                    shortDescription={path.shortDescription}
                     longDiscription={path.longDiscription}
                     pathLength={path.pathLength}
                     favorites={path.favorites}

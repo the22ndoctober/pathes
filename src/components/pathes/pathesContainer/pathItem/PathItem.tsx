@@ -12,7 +12,7 @@ import styled from "@emotion/styled";
 type PathItemProps = {
   id: number,
   title: string,
-  shortDescprition: string,
+  shortDescription: string,
   longDiscription: string,
   pathLength: number,
   select: any,
@@ -21,7 +21,7 @@ type PathItemProps = {
 
 
 
-const PathItem = ({id, title,shortDescprition,longDiscription,select,pathLength,favorites}:PathItemProps) => {
+const PathItem = ({id, title,shortDescription,longDiscription,select,pathLength,favorites}:PathItemProps) => {
 
   const selectedPath = useSelector(activePath)
 
@@ -42,7 +42,7 @@ const PathItem = ({id, title,shortDescprition,longDiscription,select,pathLength,
                       {favorites ? <><StarIcon sx={{color: id === selectedPath ? 'white': '#1976d2'}}/> {title} </>: title}
                     </Typography>
                     <p style={{margin: '0 0 0 0', maxWidth: '300px', color: id === selectedPath ? '#fff' : 'grey'}}>
-                      {shortDescprition}
+                      {shortDescription}
           
                     </p>
                 </Grid>

@@ -5,16 +5,14 @@ import { getPathes } from "../../api/getPathes"
 export const fetchPathes = createAsyncThunk(GET_PATHES, getPathes)
 
 export const addPath = (state:any, type: string, action:any)=>{
-    if(type === ADD_PATH)return [...state, action.payload]
+    if(type === ADD_PATH) return [...state, action.payload]
     return state
 }
 
 export const selectPath = (state:any, action: any) =>{
-    
-   
-
     if(action.type === SELECT_PATH){
-       action.payload !== state ? action.payload : 'none'     
+       if(action.payload !== state) return action.payload
+       return 'none'    
     }
     return state
 }
