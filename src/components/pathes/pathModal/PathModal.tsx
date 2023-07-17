@@ -15,9 +15,10 @@ import Textarea from '@mui/joy/Textarea'
 import Input from '@mui/joy/Input'
 import RouteIcon from '@mui/icons-material/Route'
 import pathLengthDisplay from '../../../other/pathLengthDisplay'
-import { selectPathes } from '../../../redux/reducers/pathes';
+import { selectPath, selectPathes } from '../../../redux/reducers/pathes';
 import { addPathAsync } from '../../../api/addPath';
 import { fetchPathes } from '../../../redux/actions/pathes';
+import { SELECT_PATH } from '../../../redux/types/types';
 
 
 
@@ -78,6 +79,7 @@ export default function PathModal() {
       await addPathAsync(postedPath)
       
       dispatch(fetchPathes())
+      dispatch(selectPath({type: SELECT_PATH, payload: 'none'}))
       handleClickClose()
       
     }

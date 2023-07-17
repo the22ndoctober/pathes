@@ -66,7 +66,7 @@ const Map = ({}) => {
                         heading: null
 
                     }
-                }  
+                }      
                 mapContainerStyle={{width: '100%', height: '100%',cursor: 'pointer'}}
             >   
                 {
@@ -75,7 +75,7 @@ const Map = ({}) => {
                     })
                 }
                 {pathes.find((el:any)=> el.id === selectedPath ).markers.map((marker:any,id:any)=>{
-                    return <Marker key={id} position={marker}/>
+                    return <Marker zIndex={9999999} key={id} position={marker}/>
                 })}
             </GoogleMap>
         </Box>

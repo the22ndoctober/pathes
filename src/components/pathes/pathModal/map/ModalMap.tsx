@@ -14,12 +14,6 @@ type ModalMapProps = {
 
 
 const ModalMap = ({center,setCenter, markers, setMarkers, directions, setDirections}: ModalMapProps) => {
-    const {isLoaded} = useLoadScript({
-        googleMapsApiKey: 'AIzaSyBA3l3bQ6X3HC7DtMZyLVjIC8I7acphPr8'
-    })
-
-    
-    
 
     const handleDirection = ()=>{
         setDirections([])
@@ -48,8 +42,6 @@ const ModalMap = ({center,setCenter, markers, setMarkers, directions, setDirecti
         console.log(directions)
     }, [markers])
 
-
-    if(!isLoaded) return <p>no map</p>
 
     return (
         <Box sx={{width: '100%', height: '100%', position: 'relative'}} >
