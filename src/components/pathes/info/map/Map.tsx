@@ -1,64 +1,54 @@
-import {useState, useEffect} from 'react'
-import { GoogleMap, useLoadScript, Marker, DirectionsRenderer } from '@react-google-maps/api'
-import {useSelector, } from 'react-redux'
-import { selectPathes, activePath } from '../../../../redux/reducers/pathes'
+import { GoogleMap, Marker, DirectionsRenderer } from '@react-google-maps/api'
 import Box from '@mui/material/Box'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { activePath, selectPathes } from '../../../../redux/reducers/pathes'
 
 
 
+export const MapHandler = (handleFunction:any)=>{
+    handleFunction()
+}
 
-const Map = () => {
-    const {isLoaded} = useLoadScript({
-        googleMapsApiKey: 'AIzaSyBA3l3bQ6X3HC7DtMZyLVjIC8I7acphPr8'
-    })
-
+const Map = ({}) => {
+    
+    
+    const [directions, setDirections] = useState<any[]>([])
     const pathes = useSelector(selectPathes)
     const selectedPath = useSelector(activePath)
 
-    const [center,setCenter] = useState<any>()
-    const [markers,setMarkers] = useState<any[]>([])
-    const [directions, setDirections] = useState<any[]>([])
+    const handleDirection = (id:number)=>{
+        
+        const markers = pathes.find((el:any)=> el.id === id ).markers
 
-    const handleDirection = ()=>{
-        setDirections([])
-        if(markers.length>=2){
+        if(markers.length >=2){
+            setDirections([]) 
             const service = new google.maps.DirectionsService()
-            markers.map((marker,id)=>{
-                id !== markers.length-1 &&
-                service.route({
-                    origin: marker,
-                    destination: markers[id+1],
-                    travelMode: google.maps.TravelMode.WALKING
-                },
-                (result,status)=>{
-                    if(status === 'OK' && result){
-                        setDirections(state=> [...state, result])
-                    }
+            markers.map((marker:any,id:any)=>{
+            id !== markers.length-1 &&
+            service.route({
+                origin: marker,
+                destination: markers[id+1],
+                travelMode: google.maps.TravelMode.WALKING
+            },
+            (result,status)=>{
+                if(status === 'OK' && result){
+                    setDirections((state:any)=> [...state, result])
+                }
                 }
                 )
             })
         }
-        
+            
     }
 
-    
-    
     useEffect(()=>{
-        const displayMarkers = ()=>{
-            setMarkers(pathes.find((path:any) => path.id === selectedPath).markers)
-        }
         
-        displayMarkers()
-        handleDirection()  
+        handleDirection(selectedPath)  
         
-    }, [selectedPath])
-
-    useEffect(()=>{
-        setCenter(markers[0])
     },[selectedPath])
 
-
-    if(!isLoaded) return <p>no map</p>
+    
     
     return (
         
@@ -66,7 +56,7 @@ const Map = () => {
             <GoogleMap 
                 
                 zoom={20} 
-                center={center}
+                center={pathes.find((el:any)=> el.id === selectedPath ).markers[0]}
                 options={
                     {
                         mapTypeControl: false,
@@ -80,14 +70,12 @@ const Map = () => {
                 mapContainerStyle={{width: '100%', height: '100%',cursor: 'pointer'}}
             >   
                 {
-                    directions.length > 0 && directions.map((direction,id)=>{
+                    directions.length > 0 && directions.map((direction:any,id:any)=>{
                         return  <DirectionsRenderer key={id} directions={direction}/>
                     })
                 }
-                {markers.map((marker,id)=>{
-                    return <Marker key={id} position={marker} onClick={()=>{
-                        setMarkers(state=>state.filter(e=> e !== marker))
-                    }}/>
+                {pathes.find((el:any)=> el.id === selectedPath ).markers.map((marker:any,id:any)=>{
+                    return <Marker key={id} position={marker}/>
                 })}
             </GoogleMap>
         </Box>

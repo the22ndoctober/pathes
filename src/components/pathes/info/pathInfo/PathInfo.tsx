@@ -1,5 +1,5 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+
+import { useSelector} from 'react-redux'
 import { selectPathes,activePath } from '../../../../redux/reducers/pathes'
 import pathLengthDisplay from '../../../../other/pathLengthDisplay'
 import Grid from '@mui/material/Grid'
@@ -23,7 +23,7 @@ const PathInfo = () => {
             {pathes.find((path:any)=> selectedPath === path.id).title}
           </Typography>
           <Typography variant="h5" sx={{color:'grey'}}>
-            {pathLengthDisplay(pathes.find((path:any)=> selectedPath === path.id).pathLength)}{/*Transform distance into string in KM*/}
+            {pathLengthDisplay(pathes.find((path:any)=> selectedPath === path.id).pathLength)} {/*Transform distance into string in KM*/}
           </Typography> 
 
         </Grid>

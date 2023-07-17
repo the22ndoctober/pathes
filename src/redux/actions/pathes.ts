@@ -16,10 +16,12 @@ export const selectPath = (state:any, action: any) =>{
 }
 
 export const handleFavorites = (state:any[],action:any) =>{
-    if(action.type === HANDLE_FAVORITES) return state.map(el=>{
-        if(el.id === action.payload) return {...el, favorites: !el.favorites}
-        return el
-    }).sort((a,b)=> b.favorites - a.favorites)
+    if(action.type === HANDLE_FAVORITES) {
+        if(!state.some(e=> typeof e.favorites === 'undefined')) return state.map(el=>{
+            if(el.id === action.payload) return {...el, favorites: !el.favorites}
+            return el
+        }).sort((a,b)=> b.favorites - a.favorites)
+    }
     
     return state
 }

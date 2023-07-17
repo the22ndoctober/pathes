@@ -116,7 +116,7 @@ export default function PathModal() {
           ) : null}
         </DialogTitle>
       </Box>
-      <Grid container spacing={2} direction={'row'}>
+      <Grid container spacing={2} direction={'row'} justifyContent={'center'} alignItems={'center'} height={'100%'}>
         <Grid item xs={6}>
           <Grid container spacing={0} rowGap={1}>
             <Grid container direction={'column'} rowGap={1}>

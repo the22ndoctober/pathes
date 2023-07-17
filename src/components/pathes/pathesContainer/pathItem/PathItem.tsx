@@ -7,8 +7,8 @@ import ArrowForwardIosTwoToneIcon from '@mui/icons-material/ArrowForwardIosTwoTo
 import StarIcon from '@mui/icons-material/Star'
 import { activePath } from "../../../../redux/reducers/pathes"
 import {useSelector } from "react-redux/es/hooks/useSelector"
-import { getSearchValue } from "../../../../redux/reducers/search"
 import styled from "@emotion/styled";
+import pathLengthDisplay from "../../../../other/pathLengthDisplay"
 
 type PathItemProps = {
   id: number,
@@ -25,7 +25,6 @@ type PathItemProps = {
 const PathItem = ({id, title,shortDescription,longDescription,select,pathLength,favorites}:PathItemProps) => {
 
   const selectedPath = useSelector(activePath)
-  const searchValue = useSelector(getSearchValue)
 
   const PathItemBox = styled(Box)({
     padding: '1rem',
@@ -58,7 +57,7 @@ const PathItem = ({id, title,shortDescription,longDescription,select,pathLength,
           <Grid item spacing={0}>
             <Grid container spacing={0} direction={'row'} alignItems={'center'}>
               <Typography sx={{color: id===selectedPath? 'white' : 'grey'}}>
-                {pathLength > 1000 ? (pathLength/1000).toFixed(1) + " km" : pathLength + "m"}
+                { pathLengthDisplay(pathLength)}
               </Typography>
               <Button sx={{color: id===selectedPath? 'white' : 'grey'}}>
                 <ArrowForwardIosTwoToneIcon/>

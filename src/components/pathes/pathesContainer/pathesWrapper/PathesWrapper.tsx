@@ -11,7 +11,7 @@ import CircularProgress from '@mui/joy/CircularProgress'
 
 
 
-const PathesWrapper = () => {   
+const PathesWrapper = ({setDirections}:any) => {   
 
     const pathes = useSelector(selectPathes)
     const status = useSelector(getPathesStatus)
@@ -25,6 +25,7 @@ const PathesWrapper = () => {
             dispatch(fetchPathes())
         }
     },[pathes,dispatch])
+    
 
     const visiblePathes = useMemo(()=> pathes.filter((path:any)=> (path.title.toLowerCase().includes(seacrhInput) ||
       path.shortDescription.toLowerCase().includes(seacrhInput) ||
@@ -44,6 +45,7 @@ const PathesWrapper = () => {
                     select={
                       ()=>{
                         dispatch(selectPath({type: SELECT_PATH, payload: path.id}))
+                       
                       }
                     }
                     title={path.title}
