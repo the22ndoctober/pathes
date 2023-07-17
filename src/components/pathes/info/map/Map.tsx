@@ -1,9 +1,8 @@
-import {useState, useEffect, useMemo} from 'react'
+import {useState, useEffect} from 'react'
 import { GoogleMap, useLoadScript, Marker, DirectionsRenderer } from '@react-google-maps/api'
-import {useSelector, useDispatch} from 'react-redux'
+import {useSelector, } from 'react-redux'
 import { selectPathes, activePath } from '../../../../redux/reducers/pathes'
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 
 
 
@@ -13,7 +12,6 @@ const Map = () => {
         googleMapsApiKey: 'AIzaSyBA3l3bQ6X3HC7DtMZyLVjIC8I7acphPr8'
     })
 
-    const dispatch = useDispatch()
     const pathes = useSelector(selectPathes)
     const selectedPath = useSelector(activePath)
 
@@ -43,31 +41,42 @@ const Map = () => {
         
     }
 
+    
+    
     useEffect(()=>{
-        setMarkers(pathes.find((path:any) => path.id === selectedPath).markers)
-        console.log(markers)
-        handleDirection()  
-        return ()=>{
-            setDirections([])
-            setMarkers([])
+        const displayMarkers = ()=>{
+            setMarkers(pathes.find((path:any) => path.id === selectedPath).markers)
         }
-    }, [])
+        
+        displayMarkers()
+        handleDirection()  
+        
+    }, [selectedPath])
 
     useEffect(()=>{
         setCenter(markers[0])
-    },[markers])
+    },[selectedPath])
 
 
     if(!isLoaded) return <p>no map</p>
     
     return (
         
-        <Box sx={{width: '100%', height: '250px'}} >
+        <Box sx={{width: '100%', height: '300px'}} >
             <GoogleMap 
                 
                 zoom={20} 
                 center={center}
-                
+                options={
+                    {
+                        mapTypeControl: false,
+                        zoomControlOptions: null,
+                        streetViewControl: false,
+                        disableDefaultUI: true,
+                        heading: null
+
+                    }
+                }  
                 mapContainerStyle={{width: '100%', height: '100%',cursor: 'pointer'}}
             >   
                 {

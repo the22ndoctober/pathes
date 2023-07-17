@@ -5,6 +5,8 @@ export const getPathes = async () => {
         .collection('Pathes')
         .orderBy('favorites', 'desc')
         .get()
-    const data:any[] = req.docs.map(e=> e.data())
+    const data:any = req.docs.map(e=> {
+        return {...e.data(), firebaseId: e.id}
+    })
     return data
 }

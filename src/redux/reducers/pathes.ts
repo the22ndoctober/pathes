@@ -1,6 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
 import * as actions from '../actions/pathes'
-import { GET_PATHES } from '../types/types'
 
 type Pathes = {
     pathes: any[],
@@ -20,14 +19,14 @@ export const pathesSlice = createSlice({
     name: 'pathes',
     initialState,
     reducers: {
-        addpath: (state,action)=>{
-            state.pathes = actions.addPath(state.pathes, action.type, action.payload)
-        },
         selectPath: (state, action) =>{
             state.activePath = actions.selectPath(state.activePath, action.payload)
         },
         handleFavorites: (state,action)=>{
             state.pathes = actions.handleFavorites(state.pathes,action.payload)
+        },
+        handlePathes: (state,action) =>{
+            state.pathes = actions.handlePathes(state.pathes, action.payload)
         }
     },
     extraReducers(builder){
@@ -38,7 +37,12 @@ export const pathesSlice = createSlice({
             .addCase(actions.fetchPathes.fulfilled, (state, action) => {
                 state.status = 'succeeded'
                 action.payload.forEach((e:any)=>{
-                    state.pathes.push(e)
+                    if(typeof e.markers[0] !== 'string'){
+                        state.pathes.push(e)
+                    }
+                    else{
+                        state.pathes.push({...e, markers: e.markers.map((marker:any) => JSON.parse(marker))})
+                    }
                 })
                 
             })
@@ -50,7 +54,7 @@ export const pathesSlice = createSlice({
     }
 })
 
-export const {addpath, selectPath,handleFavorites} = pathesSlice.actions
+export const {selectPath,handleFavorites,handlePathes} = pathesSlice.actions
 
 export const selectPathes = (state:any) => state.pathes.pathes
 export const activePath = (state:any) => state.pathes.activePath

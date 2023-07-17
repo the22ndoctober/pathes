@@ -1,5 +1,4 @@
-import React from 'react'
-import Container from '@mui/material/Container'
+
 import PathesContainer from './pathesContainer/PathesContainer'
 import Grid from '@mui/material/Grid'
 import Info from './info/Info'

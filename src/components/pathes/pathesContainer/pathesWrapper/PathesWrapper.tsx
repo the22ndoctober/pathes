@@ -26,8 +26,8 @@ const PathesWrapper = () => {
     },[pathes,dispatch])
 
     return (
-        <Box>
-            <Grid container spacing={0} direction={'column'} rowGap={2}>
+        <Box sx={{overflowY: 'scroll', maxHeight: '420px'}}>
+            <Grid container spacing={0} direction={'column'} rowGap={2} >
                 {status === 'loading' ? 
                 <CircularProgress color="primary"/> : 
                 pathes.map((path:any)=>{

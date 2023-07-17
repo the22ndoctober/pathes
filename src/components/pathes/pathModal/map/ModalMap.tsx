@@ -3,17 +3,23 @@ import { GoogleMap, useLoadScript, Marker, DirectionsRenderer } from '@react-goo
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 
+type ModalMapProps = {
+    center: any,
+    setCenter: React.Dispatch<React.SetStateAction<any>>,
+    markers: any[],
+    setMarkers: React.Dispatch<React.SetStateAction<any>>,
+    directions: any[],
+    setDirections: React.Dispatch<React.SetStateAction<any[]>>
+}
 
 
-const ModalMap = () => {
+const ModalMap = ({center,setCenter, markers, setMarkers, directions, setDirections}: ModalMapProps) => {
     const {isLoaded} = useLoadScript({
         googleMapsApiKey: 'AIzaSyBA3l3bQ6X3HC7DtMZyLVjIC8I7acphPr8'
     })
 
     
-    const [center,setCenter] = useState<any>({lat: 43.65,lng: -79.34})
-    const [markers,setMarkers] = useState([])
-    const [directions, setDirections] = useState<any[]>([])
+    
 
     const handleDirection = ()=>{
         setDirections([])
@@ -46,23 +52,40 @@ const ModalMap = () => {
     if(!isLoaded) return <p>no map</p>
 
     return (
-        <Box sx={{width: '100%', height: '300px'}} >
-            <Button variant="text" color="primary" onClick={()=>{
+        <Box sx={{width: '100%', height: '100%', position: 'relative'}} >
+            <Button variant="contained" 
+                sx={{
+                    backgroundColor: 'grey',
+                    zIndex: 20,
+                    postion: 'absolute',
+                    top: '50px',
+                    left: '50%',
+                    transform: 'translate(-50%,-50%)'}} 
+                onClick={()=>{
                 
-                setDirections([])
-                setMarkers([])
+                    setDirections([])
+                    setMarkers([])
             }}>
               Reset
             </Button>
             <GoogleMap 
                 
-                zoom={16} 
+                zoom={19} 
                 center={center}
-                
-                mapContainerStyle={{width: '100%', height: '100%',cursor: 'pointer'}}
+                options={
+                    {
+                        mapTypeControl: false,
+                        zoomControlOptions: null,
+                        streetViewControl: false,
+                        disableDefaultUI: true,
+                        heading: null
+
+                    }
+                }                
+                mapContainerStyle={{width: '100%',marginTop:'-20px', height: '420px',cursor: 'pointer'}}
                 onClick={(e)=>{
                     e.domEvent.preventDefault()
-                    setMarkers((state):any=>[...state, e.latLng])
+                    setMarkers((state:any)=>[...state, e.latLng])
                     setCenter(e.latLng)
                 }}
             >   
@@ -72,8 +95,8 @@ const ModalMap = () => {
                     })
                 }
                 {markers.map((marker,id)=>{
-                    return <Marker key={id} position={marker} onClick={()=>{
-                        setMarkers(state=>state.filter(e=> e !== marker))
+                    return <Marker key={id} position={marker} zIndex={9999999} onClick={()=>{
+                        setMarkers((state:any)=>state.filter((e:any)=> e !== marker))
                     }}/>
                 })}
             </GoogleMap>

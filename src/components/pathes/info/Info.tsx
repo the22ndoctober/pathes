@@ -5,10 +5,11 @@ import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import { useDispatch, useSelector } from 'react-redux'
-import { activePath, selectPathes, handleFavorites } from '../../../redux/reducers/pathes'
+import { activePath, selectPathes, handleFavorites, handlePathes, selectPath } from '../../../redux/reducers/pathes'
 import OpenWithOutlinedIcon from '@mui/icons-material/OpenWithOutlined'
 import Typography from '@mui/material/Typography'
-import { HANDLE_FAVORITES } from '../../../redux/types/types'
+import { HANDLE_DELETE_PATH, HANDLE_FAVORITES, SELECT_PATH } from '../../../redux/types/types'
+import { deletePath } from '../../../api/deletePath'
 
 
 
@@ -21,6 +22,12 @@ const Info = () => {
 
   const changeFavorites = ()=>{
     dispatch(handleFavorites({type: HANDLE_FAVORITES, payload: selectedPath}))
+  }
+  
+  const handleRemove = ()=>{
+    deletePath(pathes.find((path:any)=> path.id === selectedPath).firebaseId)
+    dispatch(handlePathes({type: HANDLE_DELETE_PATH, payload: selectedPath}))
+    dispatch(selectPath({type: SELECT_PATH, payload: ''}))
   }
 
   if(selectedPath !== 'none') return (
@@ -38,7 +45,9 @@ const Info = () => {
             <Button variant="text" color="primary" onClick={changeFavorites}>
               {pathes.find((path:any)=> path.id === selectedPath).favorites ? 'Remove from Favorites': 'Add to Favorites'}
             </Button> 
-            <Button variant="text" color="error">Remove</Button>
+            <Button variant="text" color="error" onClick={handleRemove}>
+              Remove
+            </Button>
           </Grid>
           
         </Grid>
