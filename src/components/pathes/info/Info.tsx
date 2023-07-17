@@ -5,7 +5,8 @@ import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import { useDispatch, useSelector } from 'react-redux'
-import { activePath, selectPathes, handleFavorites, handlePathes, selectPath } from '../../../redux/reducers/pathes'
+import { activePath, selectPathes, handleFavorites, selectPath } from '../../../redux/reducers/pathes'
+import { fetchPathes } from '../../../redux/actions/pathes'
 import OpenWithOutlinedIcon from '@mui/icons-material/OpenWithOutlined'
 import Typography from '@mui/material/Typography'
 import { HANDLE_DELETE_PATH, HANDLE_FAVORITES, SELECT_PATH } from '../../../redux/types/types'
@@ -18,19 +19,21 @@ const Info = () => {
 
   const selectedPath = useSelector(activePath)
   const pathes = useSelector(selectPathes)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<any>()
 
   const changeFavorites = ()=>{
     dispatch(handleFavorites({type: HANDLE_FAVORITES, payload: selectedPath}))
   }
   
-  const handleRemove = ()=>{
-    deletePath(pathes.find((path:any)=> path.id === selectedPath).firebaseId)
-    dispatch(handlePathes({type: HANDLE_DELETE_PATH, payload: selectedPath}))
-    dispatch(selectPath({type: SELECT_PATH, payload: ''}))
+  const handleRemove = async()=>{
+    await deletePath(pathes.find((path:any)=> path.id === selectedPath).firebaseId)
+    dispatch(selectPath({type: SELECT_PATH, payload: pathes[0].id}))
+    await dispatch(fetchPathes())
   }
 
-  if(selectedPath !== 'none') return (
+  return(
+  <>
+  { selectedPath !== 'none' ?
     
       <Grid container spacing={0} direction={'column'} paddingLeft={4} sx={{minHeight: '100%'}} justifyContent={'space-between'}>
         
@@ -54,15 +57,17 @@ const Info = () => {
       </Grid>
    
     
-  )
+      :
 
-  return (
-    <Grid container spacing={0} direction={'row'} justifyContent={'center'} alignItems={'center'} height={'100%'} columnGap={2}>
-      <OpenWithOutlinedIcon sx={{color:'grey'}}/>
-      <Typography variant="h6" color="initial">
-        Select the path
-      </Typography>
-    </Grid>
+
+      <Grid container spacing={0} direction={'row'} justifyContent={'center'} alignItems={'center'} height={'100%'} columnGap={2}>
+        <OpenWithOutlinedIcon sx={{color:'grey'}}/>
+        <Typography variant="h6" color="initial">
+          Select the path
+        </Typography>
+      </Grid>
+    }
+  </>
   )
 }
 

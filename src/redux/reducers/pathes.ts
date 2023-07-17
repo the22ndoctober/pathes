@@ -24,9 +24,6 @@ export const pathesSlice = createSlice({
         },
         handleFavorites: (state,action)=>{
             state.pathes = actions.handleFavorites(state.pathes,action.payload)
-        },
-        handlePathes: (state,action) =>{
-            state.pathes = actions.handlePathes(state.pathes, action.payload)
         }
     },
     extraReducers(builder){
@@ -36,6 +33,7 @@ export const pathesSlice = createSlice({
             })
             .addCase(actions.fetchPathes.fulfilled, (state, action) => {
                 state.status = 'succeeded'
+                state.pathes = []
                 action.payload.forEach((e:any)=>{
                     if(typeof e.markers[0] !== 'string'){
                         state.pathes.push(e)
@@ -54,7 +52,7 @@ export const pathesSlice = createSlice({
     }
 })
 
-export const {selectPath,handleFavorites,handlePathes} = pathesSlice.actions
+export const {selectPath,handleFavorites} = pathesSlice.actions
 
 export const selectPathes = (state:any) => state.pathes.pathes
 export const activePath = (state:any) => state.pathes.activePath

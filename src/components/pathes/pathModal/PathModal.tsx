@@ -31,7 +31,7 @@ export default function PathModal() {
   const [shortDescription, setShortDescription] = useState<string>('')
   const [longDescription,setLongDescription] = useState<string>('')
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<any>()
   const open = useSelector(isOpen)
   const pathes = useSelector(selectPathes)
     
@@ -76,8 +76,8 @@ export default function PathModal() {
       }
 
       await addPathAsync(postedPath)
-
-      await fetchPathes()
+      
+      dispatch(fetchPathes())
       handleClickClose()
       
     }

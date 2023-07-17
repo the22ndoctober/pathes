@@ -35,11 +35,6 @@ const PathItem = ({id, title,shortDescription,longDescription,select,pathLength,
   return (
     <PathItemBox 
       onClick={select} 
-      display={title.toLowerCase().includes(searchValue) 
-        || shortDescription.toLowerCase().includes(searchValue) 
-        || longDescription.toLowerCase().includes(searchValue)
-         ? 'flex' 
-         : 'none'}
       >
       <Grid container justifyContent={'space-between'} spacing={0} columnGap={2} direction={'row'} alignItems={'center'}>
           <Grid item >

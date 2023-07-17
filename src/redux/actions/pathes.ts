@@ -15,11 +15,6 @@ export const selectPath = (state:any, action: any) =>{
     return state
 }
 
-export const handlePathes = (state:any, action:any) =>{
-    if(action.type === HANDLE_DELETE_PATH) return state.filter((path:any)=> path.id !== action.payload)
-    return state
-}
-
 export const handleFavorites = (state:any[],action:any) =>{
     if(action.type === HANDLE_FAVORITES) return state.map(el=>{
         if(el.id === action.payload) return {...el, favorites: !el.favorites}
