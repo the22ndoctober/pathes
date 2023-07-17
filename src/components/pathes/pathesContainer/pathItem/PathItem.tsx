@@ -38,16 +38,15 @@ const PathItem = ({id, title,shortDescription,longDescription,select,pathLength,
       <Grid container justifyContent={'space-between'} spacing={0} columnGap={2} direction={'row'} alignItems={'center'}>
           <Grid item >
             <Grid container columnGap={2} direction={'row'} alignItems={'center'}>
-              <OpenWithOutlinedIcon sx={{width: '2rem', height: '2rem', transform: 'rotate(45deg)', color: id===selectedPath? 'white' : 'grey'}}/>
+              <OpenWithOutlinedIcon sx={{width: {lg: '2rem', md: '1.4rem'}, height: {lg: '2rem', md: '1.4rem'}, transform: 'rotate(45deg)', color: id===selectedPath? 'white' : 'grey'}}/>
               <Grid item>
                 <Grid container spacing={0} direction={'column'}>
-                    <Typography variant="h6" color="initial" padding={0} display={'flex'} alignItems={'center'} sx={{columnGap:1, color: id === selectedPath ? 'white': 'black'}}>
+                    <Typography variant="h6" color="initial" padding={0} display={'flex'} alignItems={'center'} sx={{columnGap:1, fontSize:{md:'1.2rem', lg: '1.4rem'}, color: id === selectedPath ? 'white': 'black'}}>
                       {favorites ? <><StarIcon sx={{color: id === selectedPath ? 'white': '#1976d2'}}/> {title} </>: title}
                     </Typography>
-                    <p style={{margin: '0 0 0 0', maxWidth: '300px', color: id === selectedPath ? '#fff' : 'grey'}}>
+                    <Typography variant='body2' sx={{fontSize:{md:'0.6rem', lg:'1rem' }, margin: '0 0 0 0', maxWidth: '300px', color: id === selectedPath ? '#fff' : 'grey'}}>
                       {shortDescription}
-          
-                    </p>
+                    </Typography>
                 </Grid>
               </Grid>
             </Grid>
@@ -56,10 +55,10 @@ const PathItem = ({id, title,shortDescription,longDescription,select,pathLength,
           
           <Grid item spacing={0}>
             <Grid container spacing={0} direction={'row'} alignItems={'center'}>
-              <Typography sx={{color: id===selectedPath? 'white' : 'grey'}}>
+              <Typography sx={{fontSize:{md:'0.8rem', lg:'1.2rem'},color: id===selectedPath? 'white' : 'grey'}}>
                 { pathLengthDisplay(pathLength)}
               </Typography>
-              <Button sx={{color: id===selectedPath? 'white' : 'grey'}}>
+              <Button sx={{padding: {md: 0, lg: 1}, minWidth: {md:'64px', lg:'32px'},color: id===selectedPath? 'white' : 'grey'}}>
                 <ArrowForwardIosTwoToneIcon/>
               </Button>
             </Grid>
