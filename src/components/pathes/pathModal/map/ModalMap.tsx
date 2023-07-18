@@ -2,6 +2,8 @@ import {useState, useEffect} from 'react'
 import { GoogleMap, useLoadScript, Marker, DirectionsRenderer } from '@react-google-maps/api'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles';
 
 type ModalMapProps = {
     center: any,
@@ -14,7 +16,19 @@ type ModalMapProps = {
 
 
 const ModalMap = ({center,setCenter, markers, setMarkers, directions, setDirections}: ModalMapProps) => {
+    const theme = useTheme();
+    const xsQuery = useMediaQuery(theme.breakpoints.up('xs'))
+    const smQuery = useMediaQuery(theme.breakpoints.up('sm'))
+    const mdQuery = useMediaQuery(theme.breakpoints.up('md'))
+    const lgQuery = useMediaQuery(theme.breakpoints.up('lg'))
 
+    function handleResponsiveStyle<T>(xs:T,sm:T,md:T,lg:T){
+        if(xsQuery) return xs
+        if(smQuery) return sm     
+        if(mdQuery) return md
+        if(lgQuery) return lg
+    }
+    
     const handleDirection = ()=>{
         setDirections([])
         if(markers.length>=2){
@@ -50,9 +64,12 @@ const ModalMap = ({center,setCenter, markers, setMarkers, directions, setDirecti
                     backgroundColor: 'grey',
                     zIndex: 20,
                     postion: 'absolute',
-                    top: '50px',
+                    top: {sm:'50px',xs:'5px'},
+                    width: {xs: '55px', sm:'70px'},
+                    height: {xs: '25px',},
+                    fontSize: {xs: '0.5rem', sm: '0.75rem'},
                     left: '50%',
-                    transform: 'translate(-50%,-50%)'}} 
+                    transform: 'translate(-50%,-50%)'}}
                 onClick={()=>{
                 
                     setDirections([])
@@ -62,7 +79,7 @@ const ModalMap = ({center,setCenter, markers, setMarkers, directions, setDirecti
             </Button>
             <GoogleMap 
                 
-                zoom={19} 
+                zoom={handleResponsiveStyle<number>(13,15,17,19)} 
                 center={center}
                 options={
                     {
@@ -74,7 +91,12 @@ const ModalMap = ({center,setCenter, markers, setMarkers, directions, setDirecti
 
                     }
                 }                
-                mapContainerStyle={{width: '100%',marginTop:'-20px', height: '420px',cursor: 'pointer'}}
+                mapContainerStyle={{
+                    width: '100%',
+                    marginTop:handleResponsiveStyle<string>('-40px','-20px','-20px', '-20px'), 
+                    height: handleResponsiveStyle<string>('180px','450px','450px','450px')     
+                    ,
+                    cursor: 'pointer'}}
                 onClick={(e)=>{
                     e.domEvent.preventDefault()
                     setMarkers((state:any)=>[...state, e.latLng])

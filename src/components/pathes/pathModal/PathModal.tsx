@@ -93,10 +93,12 @@ export default function PathModal() {
       maxWidth={'lg'}
       PaperProps={{
         sx: {
+          
           width: '80%',
           maxHeight:'70%',
-          height: 900,
-          padding: '1rem'
+          height: {lg:900, xs: 450},
+          padding: {lg:'1rem', xs:'0.5rem'}
+          
         }}}
     >
       <Box >
@@ -118,76 +120,81 @@ export default function PathModal() {
           ) : null}
         </DialogTitle>
       </Box>
-      <Grid container spacing={2} direction={'row'} justifyContent={'center'} alignItems={'center'} height={'100%'}>
-        <Grid item xs={6}>
-          <Grid container spacing={0} rowGap={1}>
-            <Grid container direction={'column'} rowGap={1}>
-              <Typography variant="body1" color="initial">
-                Title
-              </Typography>
-              <Input 
-                placeholder="Type title in here"
-                value={title}
-                onChange={e=>{
-                    setTitle(e.target.value)
+      <Grid container spacing={2} direction={{xs:'column-reverse',sm:'row'}} justifyContent={{sm:'center'}} alignItems={{sm:'center'}} height={{sm:'100%'}}>
+        <Grid item md={6} >
+          <Grid container spacing={0} rowGap={1} direction={'column'}>
+            <Grid item order={{xs:2,sm:1}}>            
+              <Grid container direction={'column'} rowGap={1}>
+                <Typography variant="body1" color="initial">
+                  Title
+                </Typography>
+                <Input 
+                  placeholder="Type title in here"
+                  value={title}
+                  onChange={e=>{
+                      setTitle(e.target.value)
+                    }}
+                />
+              </Grid>
+              <Grid container direction={'column'} rowGap={1}>
+                <Typography variant="body1" color="initial">
+                  Short description
+                </Typography>
+                <Textarea 
+                  placeholder='Type description in here'
+                  minRows={2} 
+                  maxRows={2}
+                  value={shortDescription}
+                  onChange={e=>{
+                    setShortDescription(e.target.value)
                   }}
-              />
+                  sx={{
+                    color: shortDescription.length > 160 ? 'red' : 'black',
+                    borderColor: shortDescription.length > 160 ? 'red' : '#D8D8DF'
+                  }}
+                  />
+                
+                <Typography variant="body2" color="initial" textAlign={'right'} sx={{
+                color: shortDescription.length > 160 ? 'red' : 'black'
+              }}>
+                  {shortDescription.length} of 160 symbols limit
+                </Typography>
+                
+              </Grid>
+              <Grid container direction={'column'} rowGap={1}>
+                <Typography variant="body1" color="initial" >
+                    Long description
+                </Typography>
+                <Textarea 
+                  placeholder='Type description in here'
+                  minRows={3}
+                  maxRows={3}
+                  value={longDescription}
+                  onChange={e=>{
+                    setLongDescription(e.target.value)
+                  }}
+                  />
+              </Grid>
             </Grid>
-            <Grid container direction={'column'} rowGap={1}>
-              <Typography variant="body1" color="initial">
-                Short description
-              </Typography>
-              <Textarea 
-                placeholder='Type description in here'
-                minRows={2} 
-                maxRows={2}
-                value={shortDescription}
-                onChange={e=>{
-                  setShortDescription(e.target.value)
-                }}
-                sx={{
-                  color: shortDescription.length > 160 ? 'red' : 'black',
-                  borderColor: shortDescription.length > 160 ? 'red' : '#D8D8DF'
-                }}
-                />
-              
-              <Typography variant="body2" color="initial" textAlign={'right'} sx={{
-              color: shortDescription.length > 160 ? 'red' : 'black'
-            }}>
-                {shortDescription.length} of 160 symbols limit
-              </Typography>
-              
+            <Grid item order={{xs:1,sm:2}}>
+              <Grid container spacing={0} direction={'row'} ml={'-0.5rem'} alignItems={'center'} justifyContent={'center'} pt={2}>
+                <RouteIcon sx={{width:'2rem', height:'2rem', color: 'grey'}}/>
+                <Typography variant="h6" sx={{color: 'grey'}}>
+                  {pathLengthDisplay(distance)}
+                </Typography>
+              </Grid>    
             </Grid>
-            <Grid container direction={'column'} rowGap={1}>
-              <Typography variant="body1" color="initial" >
-                 Long description
-              </Typography>
-              <Textarea 
-                placeholder='Type description in here'
-                minRows={3}
-                maxRows={3}
-                value={longDescription}
-                onChange={e=>{
-                  setLongDescription(e.target.value)
-                }}
-                />
-            </Grid>
+            <Grid item order={{xs:3,sm:3}}>
+            
+              <DialogActions>
+                <Button variant='outlined' color='primary' autoFocus onClick={sendPath} sx={{margin: '0 auto'}}>
+                  Add Path
+                </Button>
+              </DialogActions>
+            </Grid> 
           </Grid>
-
-          <Grid container spacing={0} direction={'row'} ml={'-0.5rem'} alignItems={'center'} justifyContent={'center'} pt={2}>
-            <RouteIcon sx={{width:'2rem', height:'2rem', color: 'grey'}}/>
-            <Typography variant="h6" sx={{color: 'grey'}}>
-              {pathLengthDisplay(distance)}
-            </Typography>
-          </Grid>    
-
-          <DialogActions>
-            <Button variant='outlined' color='primary' autoFocus onClick={sendPath} sx={{margin: '0 auto'}}>
-              Add Path
-            </Button>
-          </DialogActions>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item md={6} sx={{maxWidth:{xs:'100%',md:'50%'},minWidth:{xs:'100%',md:'50%'}}}>
           <ModalMap
             center={center}
             setCenter={setCenter}
